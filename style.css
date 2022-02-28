@@ -52,9 +52,9 @@ span.rev {
 textarea {
   width: 80%;
   height: 300px;
-  font-size: 20px;
+  font-size: 30px;
   border-radius: 5px;
-  padding: 38px 20px 70px 20px;
+  padding: 50px 20px 70px 20px;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   border: none;
   outline: none;
@@ -89,4 +89,8 @@ button {
 
 button:hover {
   padding: 15px 30px;
+}
+
+#output {
+  font-size: 40px;
 }

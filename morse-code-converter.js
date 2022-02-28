@@ -68,7 +68,4 @@ const morseToText = (morse) => {
     .join(" ");
 };
 
-module.exports = {
-  textToMorse,
-  morseToText,
-};
+export { morseTable, textToMorse, morseToText };
