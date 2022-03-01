@@ -1,9 +1,3 @@
-// import {
-//   morseTable,
-//   textToMorse,
-//   morseToText,
-// } from "./morse-code-converter.js";
-
 const morseTable = [
   { char: "A", code: ".-" },
   { char: "B", code: "-..." },
@@ -60,7 +54,7 @@ const textToMorse = (text) =>
     .join(" ");
 
 const morseToText = (morse) => {
-  const words = morse.split(/\s{2,}/g); // Fill array with words when there's more than 2 spaces
+  const words = morse.split(/\s{2,}/g);
   return words
     .map((word) =>
       word
@@ -81,9 +75,60 @@ const playButton = document.querySelector(".play");
 
 const handleClick = () => {
   const morse = textToMorse(text.value);
-  console.log(morse);
+  // console.log(morse);
   out.value = morse;
 };
 
 text.addEventListener("keyup", handleClick);
 convButton.addEventListener("click", handleClick);
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const oscillator = audioCtx.createOscillator();
+oscillator.type = "square";
+// oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime); // value in hertz
+// oscillator.connect(audioCtx.destination);
+oscillator.start(0);
+console.log(audioCtx);
+console.log(oscillator);
+
+var connect = () => {
+  oscillator.connect(audioCtx.destination);
+  playButton.innerHTML = "Pause";
+};
+
+var disconnect = () => {
+  oscillator.disconnect(0);
+};
+
+playButton.addEventListener("click", () => {
+  const morse = [...out.value];
+
+  let i = 0;
+  let unit = 200;
+  let m = "";
+  let offset = 0;
+  const loop = () => {
+    offset = 0;
+    if (i < morse.length) {
+      out.innerHTML.replace(
+        out.value[i],
+        '<span style="color: blue;">' + out.value[i] + "</span>"
+      );
+
+      m = morse[i];
+      setTimeout(connect, 100);
+      // connect();
+      offset = m === "." ? 300 : m === "-" && 700;
+      setTimeout(() => {
+        disconnect();
+        i++;
+        if (offset === 0) {
+          setTimeout(loop, 1000);
+        } else {
+          loop();
+        }
+      }, offset);
+    } else playButton.innerHTML = "Play";
+  };
+  loop();
+});
