@@ -85,7 +85,7 @@ convButton.addEventListener("click", handleClick);
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const oscillator = audioCtx.createOscillator();
 oscillator.type = "square";
-// oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime); // value in hertz
+oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime); // value in hertz
 // oscillator.connect(audioCtx.destination);
 oscillator.start(0);
 console.log(audioCtx);
